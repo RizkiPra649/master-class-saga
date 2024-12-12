@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation</title>
+  <style>
+    /* Elemen awal tersembunyi */
+    .hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    /* Animasi saat terlihat */
+    .animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Styling elemen */
+    .box {
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      width: 80%;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Scroll ke Bawah</h1>
+  <div class="box hidden">Elemen 1</div>
+  <div class="box hidden">Elemen 2</div>
+  <div class="box hidden">Elemen 3</div>
+  <div class="box hidden">Elemen 4</div>
+
+  <script>
+    // Seleksi semua elemen yang memiliki class "hidden"
+    const hiddenElements = document.querySelectorAll('.hidden');
+
+    // Buat observer dengan Intersection Observer API
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Tambahkan class "animate" ketika elemen terlihat
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target); // Hentikan pemantauan elemen
+        }
+      });
+    });
+
+    // Daftarkan setiap elemen ke observer
+    hiddenElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

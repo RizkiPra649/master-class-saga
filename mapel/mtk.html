@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Matematika</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #111113;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(45deg, #ec8e14ff, rgb(245, 140, 3));
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        header nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #ec8e14ff;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .module-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .module {
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .module h3 {
+            background: #ec8e14ff;
+            color: #fff;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .module a {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #ec8e14ff;
+            font-weight: 600;
+            background: #f4f4f9;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .module a:hover {
+            background: #ec8e14ff;
+            color: #fff;
+        }
+
+        .quiz-section, .stats-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .quiz-section button, .stats-section button {
+            background: linear-gradient(45deg, #ec8e14ff, rgb(245, 140, 3));
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-section button:hover, .stats-section button:hover {
+            background: linear-gradient(45deg, #ec8e14ff, rgb(245, 140, 3));
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ec8e14ff;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .module h3 {
+                font-size: 1rem;
+            }
+
+            .quiz-section button, .stats-section button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Matematika Kelas X</h1>
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="logout.html">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Modul Materi</h2>
+        <section class="module-list">
+            <div class="module">
+                <h3>Modul 1: Persamaan Linear</h3>
+                <a href="modul1.pdf" target="_blank">Buka Modul</a>
+            </div>
+            <div class="module">
+                <h3>Modul 2: Matriks</h3>
+                <a href="modul2.pdf" target="_blank">Buka Modul</a>
+            </div>
+            <div class="module">
+                <h3>Modul 3: Statistika</h3>
+                <a href="modul3.pdf" target="_blank">Buka Modul</a>
+            </div>
+        </section>
+
+        <!-- <input type="file" id="uploadModul" accept=".pdf">
+        <button onclick="uploadModul()">Upload Modul</button> -->
+
+
+        <section class="quiz-section">
+            <h2 class="section-title">Latihan Soal</h2>
+            <button onclick="startQuiz()">Mulai Latihan</button>
+        </section>
+
+        <section class="stats-section">
+            <h2 class="section-title">Hasil Belajar</h2>
+            <button onclick="viewStats()">Lihat Statistik</button>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Media Pembelajaran Interaktif. Semua Hak Dilindungi.</p>
+    </footer>
+
+    <script>
+        function startQuiz() {
+            alert("Fitur latihan soal akan segera hadir.");
+        }
+
+        function viewStats() {
+            alert("Fitur statistik akan segera hadir.");
+        }
+
+
+        
+        function uploadModul() {
+            const fileInput = document.getElementById('uploadModul');
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Assuming you have a way to store/process the uploaded PDF
+                    // Here, I'm just logging the data URL for demonstration
+                    console.log(e.target.result); // You'd integrate with backend here
+
+                    // Example: creating a new module dynamically
+                    const moduleList = document.querySelector('.module-list');
+                    const newModule = document.createElement('div');
+                    newModule.classList.add('module');
+                    newModule.innerHTML = `<h3>Modul Baru</h3><a href="${e.target.result}" target="_blank">Buka Modul</a>`;
+                    moduleList.appendChild(newModule);
+
+                    // Clear the input
+                    fileInput.value = '';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Pilih file PDF terlebih dahulu!");
+            }
+        }
+
+    </script>
+</body>
+</html>
+      

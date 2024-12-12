@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Belajar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 10px 20px;
+            background: #ff6600;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        header nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .progress-overview {
+            margin: 20px 0;
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .progress-overview h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ff6600;
+        }
+
+        .progress-bar-container {
+            margin: 10px 0;
+            background: #444;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #ff6600;
+            width: 80%; /* Example progress */
+            text-align: center;
+            color: #fff;
+            font-size: 0.8rem;
+            line-height: 20px;
+        }
+
+        .material-list {
+            margin-top: 20px;
+        }
+
+        .material-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #333;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .material-item.completed {
+            background: #2d572c; /* Green for completed */
+        }
+
+        .material-item p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .material-item a {
+            text-decoration: none;
+            color: #ff6600;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 10px;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        footer p {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Progress Belajar</h1>
+        <nav>
+            <a href="#progress">Progress</a>
+            <a href="pengaturan.html">Pengaturan</a>
+            <a href="#logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Overview Section -->
+        <div class="progress-overview">
+            <h2>Ringkasan Kemajuan</h2>
+            <p>Total materi selesai: <strong>8/10</strong></p>
+            <p>Total waktu belajar: <strong>15 jam</strong></p>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar">80%</div>
+            </div>
+        </div>
+
+        <!-- Material List Section -->
+        <div class="material-list">
+            <h2>Materi Belajar</h2>
+
+            <!-- Completed Material -->
+            <div class="material-item completed">
+                <p>Materi 1: Pengantar Teknologi</p>
+                <a href="#">Review</a>
+            </div>
+
+            <div class="material-item completed">
+                <p>Materi 2: Dasar Komputer</p>
+                <a href="#">Review</a>
+            </div>
+
+            <!-- Incomplete Material -->
+            <div class="material-item">
+                <p>Materi 3: Algoritma Dasar</p>
+                <a href="#">Lanjutkan</a>
+            </div>
+
+            <div class="material-item">
+                <p>Materi 4: Pemrograman Python</p>
+                <a href="#">Lanjutkan</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Media Pembelajaran Interaktif</p>
+    </footer>
+</body>
+</html>

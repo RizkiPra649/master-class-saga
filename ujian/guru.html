@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akun Guru</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #ff6600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ff6600;
+        }
+
+        .soal-list, .hasil-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .soal-list li, .hasil-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+        }
+
+        .soal-list li a {
+            color: #ff6600;
+            text-decoration: none;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+        }
+
+        input[type="file"], button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="file"] {
+            background: #444;
+            color: #fff;
+        }
+
+        button {
+            background: #ff6600;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e55c00;
+        }
+
+        .hasil-list li p {
+            margin: 5px 0;
+        }
+
+        .scrollable {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Akun Guru</h1>
+
+        <!-- Daftar Soal -->
+        <div class="section">
+            <h2>Daftar Soal</h2>
+            <ul class="soal-list" id="soalList"></ul>
+        </div>
+
+        <!-- Upload Soal Baru -->
+        <div class="section upload-section">
+            <h2>Unggah Soal Baru</h2>
+            <form id="uploadForm">
+                <input type="file" id="soalFile" accept=".pdf" />
+                <button type="button" onclick="uploadSoal()">Unggah</button>
+            </form>
+        </div>
+
+        <!-- Hasil Jawaban Siswa -->
+        <div class="section">
+            <h2>Hasil Jawaban Siswa</h2>
+            <div class="scrollable">
+                <ul class="hasil-list" id="hasilList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk mendapatkan daftar soal
+        function fetchSoal() {
+            fetch('/soal-pdf/list')
+                .then(response => response.json())
+                .then(data => {
+                    const soalList = document.getElementById('soalList');
+                    soalList.innerHTML = data.map(soal => `
+                        <li>
+                            <a href="/soal-pdf/${soal.filename}" target="_blank">${soal.title}</a>
+                        </li>
+                    `).join('');
+                })
+                .catch(err => console.error('Gagal memuat daftar soal:', err));
+        }
+
+        // Fungsi untuk mendapatkan hasil jawaban siswa
+        function fetchHasil() {
+            fetch('/jawaban/all')
+                .then(response => response.json())
+                .then(data => {
+                    const hasilList = document.getElementById('hasilList');
+                    hasilList.innerHTML = data.map((hasil, index) => `
+                        <li>
+                            <p><strong>Siswa ${index + 1}</strong></p>
+                            <p>Skor Ganda: ${hasil.skorGanda}</p>
+                            <p>Skor Isian: ${hasil.skorIsian}</p>
+                            <p>Total Skor: ${hasil.totalSkor}</p>
+                            <p>Waktu Kirim: ${new Date(hasil.waktu).toLocaleString()}</p>
+                        </li>
+                    `).join('');
+                })
+                .catch(err => console.error('Gagal memuat hasil jawaban siswa:', err));
+        }
+
+        // Fungsi untuk mengunggah soal baru
+        function uploadSoal() {
+            const fileInput = document.getElementById('soalFile');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('/upload-soal', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchSoal(); // Refresh daftar soal
+                })
+                .catch(err => console.error('Gagal mengunggah soal:', err));
+        }
+
+        // Muat data awal
+        fetchSoal();
+        fetchHasil();
+    </script>
+</body>
+</html>

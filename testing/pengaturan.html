@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Akun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #ff6600;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        header nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .settings-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        .settings-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ff6600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+        }
+
+        .form-group button {
+            background: #ff6600;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .form-group button:hover {
+            background: #e55d00;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            color: #0f0;
+            font-size: 0.9rem;
+        }
+
+        .feedback.error {
+            color: #f00;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 10px;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        footer p {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pengaturan Akun</h1>
+        <nav>
+            <a href="akunsiswa.html">Kembali</a>
+            <!-- <a href="pengaturan.html">Pengaturan</a>
+            <a href="#logout">Logout</a> -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Account Settings Section -->
+        <section class="settings-section">
+            <h2>Informasi Akun</h2>
+            <div class="form-group">
+                <label for="username">Nama Pengguna</label>
+                <input type="text" id="username" value="Nama Siswa">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" value="siswa@example.com">
+            </div>
+            <div class="form-group">
+                <button id="update-account">Perbarui Informasi</button>
+                <p class="feedback" id="account-feedback"></p>
+            </div>
+        </section>
+
+        <!-- Learning Preferences Section -->
+        <section class="settings-section">
+            <h2>Preferensi Belajar</h2>
+            <div class="form-group">
+                <label for="tema">Tema</label>
+                <select id="tema">
+                    <option value="gelap" selected>Tema Gelap</option>
+                    <option value="terang">Tema Terang</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notifikasi">Notifikasi</label>
+                <select id="notifikasi">
+                    <option value="aktif" selected>Aktif</option>
+                    <option value="nonaktif">Nonaktif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button id="save-preferences">Simpan Preferensi</button>
+                <p class="feedback" id="preferences-feedback"></p>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="settings-section">
+            <h2>Keamanan</h2>
+            <div class="form-group">
+                <label for="password">Kata Sandi Baru</label>
+                <input type="password" id="password" placeholder="Masukkan kata sandi baru">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Konfirmasi Kata Sandi</label>
+                <input type="password" id="confirm-password" placeholder="Konfirmasi kata sandi baru">
+            </div>
+            <div class="form-group">
+                <button id="update-password">Perbarui Kata Sandi</button>
+                <p class="feedback" id="password-feedback"></p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Media Pembelajaran Interaktif</p>
+    </footer>
+
+    <script>
+        // Update Account Information
+        document.getElementById('update-account').addEventListener('click', () => {
+            const feedback = document.getElementById('account-feedback');
+            feedback.textContent = 'Informasi akun berhasil diperbarui!';
+        });
+
+        // Save Learning Preferences
+        document.getElementById('save-preferences').addEventListener('click', () => {
+            const tema = document.getElementById('tema').value;
+            const notifikasi = document.getElementById('notifikasi').value;
+
+            // Save preferences to localStorage
+            localStorage.setItem('tema', tema);
+            localStorage.setItem('notifikasi', notifikasi);
+
+            const feedback = document.getElementById('preferences-feedback');
+            feedback.textContent = 'Preferensi berhasil disimpan!';
+        });
+
+        // Update Password
+        document.getElementById('update-password').addEventListener('click', () => {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const feedback = document.getElementById('password-feedback');
+
+            if (password === '' || confirmPassword === '') {
+                feedback.textContent = 'Kata sandi tidak boleh kosong.';
+                feedback.classList.add('error');
+            } else if (password !== confirmPassword) {
+                feedback.textContent = 'Kata sandi tidak cocok.';
+                feedback.classList.add('error');
+            } else {
+                feedback.textContent = 'Kata sandi berhasil diperbarui!';
+                feedback.classList.remove('error');
+            }
+        });
+
+        // Load saved preferences
+        window.addEventListener('load', () => {
+            const savedTema = localStorage.getItem('tema');
+            const savedNotifikasi = localStorage.getItem('notifikasi');
+
+            if (savedTema) document.getElementById('tema').value = savedTema;
+            if (savedNotifikasi) document.getElementById('notifikasi').value = savedNotifikasi;
+        });
+    </script>
+</body>
+</html>

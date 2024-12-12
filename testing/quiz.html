@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Siswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #ff6600;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        header nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .quiz-container {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pdf-viewer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .pdf-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .quiz-section {
+            margin-top: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .answer-option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .answer-option input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff6600;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 10px;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        footer p {
+            color: #aaa;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kuis Siswa</h1>
+        <nav>
+            <a href="akun-siswa.html">Akun Siswa</a>
+            <a href="pengaturan.html">Pengaturan</a>
+            <a href="#logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="quiz-container">
+            <!-- Tampilan PDF Soal -->
+            <div class="pdf-viewer">
+                <iframe src="../soal/SOAL UTS TIK KELAS 9.pdf" id="pdf-viewer"></iframe>
+            </div>
+
+            <!-- Input Jawaban Pilihan Ganda -->
+            <div class="quiz-section">
+                <div class="question">
+                    <h3>1. Apa itu variabel dalam pemrograman?</h3>
+                    <div class="answer-option">
+                        <input type="radio" id="a1" name="q1" value="a">
+                        <label for="a1">A. Tempat penyimpanan data</label>
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" id="b1" name="q1" value="b">
+                        <label for="b1">B. Proses pengulangan kode</label>
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" id="c1" name="q1" value="c">
+                        <label for="c1">C. Fungsi untuk input data</label>
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" id="d1" name="q1" value="d">
+                        <label for="d1">D. Tidak ada jawaban yang benar</label>
+                    </div>
+                </div>
+
+                <!-- Input Soal Isian -->
+                <div class="question">
+                    <h3>2. Jelaskan apa itu loop dalam pemrograman!</h3>
+                    <textarea id="q2" name="q2" rows="4" cols="50" placeholder="Jawab disini..."></textarea>
+                </div>
+
+                <!-- Jawaban Pilihan Ganda Lainnya dan Soal Isian -->
+                <!-- Tambah soal sesuai dengan kebutuhan -->
+
+                <button class="submit-btn">Kirim Jawaban</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Media Pembelajaran Interaktif</p>
+    </footer>
+
+    <script>
+        // Menambahkan fitur untuk memperbesar atau memperkecil PDF menggunakan JavaScript
+        let pdfViewer = document.getElementById("pdf-viewer");
+        function zoomIn() {
+            let currentWidth = pdfViewer.width;
+            pdfViewer.width = (currentWidth * 1.2) + "%";
+        }
+
+        function zoomOut() {
+            let currentWidth = pdfViewer.width;
+            pdfViewer.width = (currentWidth / 1.2) + "%";
+        }
+        javascript
+        pdfViewer.setAttribute('allowfullscreen', 'false');
+        pdfViewer.setAttribute('allow', 'fullscreen');
+        pdfViewer.setAttribute('allowfullscreen', 'false');
+        pdfViewer.setAttribute('allow', 'fullscreen');
+        pdfViewer.setAttribute('sandbox', 'allow-forms allow-same-origin allow-scripts allow-popups');
+
+    </script>
+</body>
+</html>
