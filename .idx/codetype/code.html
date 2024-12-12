@@ -1,49 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toggle Display Direction</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
         .container {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-        }
-        .item {
-            width: 100px;
-            height: 100px;
-            background-color: lightblue;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
-</head>
-<body>
+              display: flex;
+              flex-direction: row;
+              width: 100%;
+         }
 
-    <button id="toggleBtn">Toggle Display</button>
-    <div class="container">
-        <div class="item">1</div>
-        <div class="item">2</div>
-        <div class="item">3</div>
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <a href="#">
+        <img src="../../img/logo2.png" alt="Klik untuk Mengunjungi" width="100" class="hidden" />
+      </a>
+
+      <div class="navbar-nav">
+        <a href="../../index.html">Beranda</a>
+        <a href="#html-fix">Html</a>
+        <a href="#css-fix">Css</a>
+        <a href="#js-fix">JavaScript</a>
+        <a href="#buttons">Save</a>
+        
+      </div>
+
+      <div class="navbar-extra">
+        <div class="search-container " id="search-container">
+          <input type="text" class="search-input" placeholder="Cari sesuatu..." />
+        </div>
+        <button class="search-icon" onclick="toggleSearch()">
+          <a id="#"><i data-feather="search"></i></a>
+        </button>
+        <a id="humberger-menu"><i data-feather="menu"></i></a>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <header>Master Class Code Editor with Syntax</header>
+      <div class="preview">
+        <div class="preview-hasil">
+          <h3>Output</h3>
+          <iframe id="output"></iframe>
+        </div>
+      </div>
+      <div class="container">
+        <!-- HTML Editor -->
+        <div class="editor-section">
+          <h3 id="html-fix">HTML</h3>
+          <textarea id="html-code"></textarea>
+        </div>
+
+        <!-- CSS Editor -->
+        <div class="editor-section">
+          <h3 id="css-fix">CSS</h3>
+          <textarea id="css-code"></textarea>
+        </div>
+
+        <!-- JavaScript Editor -->
+        <div class="editor-section">
+          <h3 id="js-fix">JavaScript</h3>
+          <textarea id="js-code"></textarea>
+        </div>
+      </div>
+
+      <div class="buttons" id="buttons">
+        <label for="fileType">Choose file type:</label>
+        <select id="fileType">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="js">JavaScript</option>
+        </select>
+        <button id="save-code">Save</button>
+        <button id="toggleBtn">Switch</button>
+        <button id="clear">Clear Editors</button>
+      </div>
     </div>
 
+    <div class="garis"></div>
+
+    <div class="wrap">
+
+
+    </div>
     <script>
-        const toggleButton = document.getElementById('toggleBtn');
+      //toogle Button for display row or colom
+      const toggleButton = document.getElementById('toggleBtn');
         const container = document.querySelector('.container');
 
         toggleButton.addEventListener('click', () => {
-            if (container.style.flexDirection === 'row') {
-                container.style.flexDirection = 'column';
-            } else {
+            if (container.style.flexDirection === 'column') {
                 container.style.flexDirection = 'row';
+            } else {
+                container.style.flexDirection = 'column';
             }
         });
-    </script>
 
-</body>
+      // Initialize CodeMirror for each editor
+      const htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
+        mode: "htmlmixed",
+        theme: "dracula",
+        viewportMargin: Infinity,
+        lineNumbers: true,
+      });
+
+      const cssEditor = CodeMirror.fromTextArea(document.getElementById("css-code"), {
+        mode: "css",
+        theme: "dracula",
+        lineNumbers: true,
+      });
+
+      const jsEditor = CodeMirror.fromTextArea(document.getElementById("js-code"), {
+        mode: "javascript",
+        theme: "dracula",
+        lineNumbers: true,
+      });
+
+      const output = document.getElementById("output");
+
+      // Function to update output
+      function updateOutput() {
+        const html = htmlEditor.getValue();
+        const css = `<style>${cssEditor.getValue()}</style>`;
+        const js = `<script>${jsEditor.getValue()}<\/script>`;
+
+        const combinedCode = `${html}${css}${js}`;
+        output.contentDocument.open();
+        output.contentDocument.write(combinedCode);
+        output.contentDocument.close();
+      }
+
+      // Real-time update
+      [htmlEditor, cssEditor, jsEditor].forEach((editor) => {
+        editor.on("change", updateOutput);
+      });
+
+      // Save code
+      document.getElementById("save-code").addEventListener("click", () => {
+        const fileType = document.getElementById("fileType").value;
+        let content = "";
+
+        if (fileType === "html") {
+          content = htmlEditor.getValue();
+        } else if (fileType === "css") {
+          content = cssEditor.getValue();
+        } else if (fileType === "js") {
+          content = jsEditor.getValue();
+        }
+
+        const blob = new Blob([content], { type: `text/${fileType}` });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `code.${fileType}`;
+        link.click();
+      });
+
+      // Clear editors
+      document.getElementById("clear").addEventListener("click", () => {
+        htmlEditor.setValue("");
+        cssEditor.setValue("");
+        jsEditor.setValue("");
+        updateOutput();
+      });
+
+      // Initial update
+      updateOutput();
+    </script>
+    <script>
+      feather.replace();
+    </script>
+  </body>
 </html>
