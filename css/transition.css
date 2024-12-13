@@ -28,3 +28,51 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (max-width: 768px) {
+    .card-mapel {
+      transform: none;
+      overflow: visible;
+      transform: skew(0deg);
+      height: 254px;
+    }
+  }
+
+  
+
+  @media (max-width: 421px){
+
+    
+
+    .navbar img {
+      width: 50px;
+    }
+    .hero {
+            background-size: auto;
+            height: 500px;
+    }
+
+    .mapel {
+      flex-direction: column;
+      align-content: center;
+    }
+    .card-mapel {
+      transform: none;
+      overflow: visible;
+      transform: skew(0deg);
+      height: 254px;
+    }
+
+    
+  }
+
+
+  /* running-text */
+  @keyframes scroll-text {
+    0% {
+        transform: translateX(200%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+    .wrap {
+        margin : 120px 0% 0% 0% ;
+    }
+    .container {
+      flex-direction: column; /* Berubah menjadi vertikal pada layar kecil */
+    }
+    .CodeMirror {
+      overflow-y: auto;
+      height: 200px;
+      flex: 1;
+    }
+
+    .navbar img {
+        width : 50px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .editor-section {
+      max-height: 80%;
+    }
+  }

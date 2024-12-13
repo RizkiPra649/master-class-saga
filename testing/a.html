@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .content img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-description {
+            max-width: 600px;
+        }
+
+        .content-description h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .content-description p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        .running-text {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .running-text span {
+            display: inline-block;
+            animation: scroll-text 5s linear infinite;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .footer {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-media a {
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .social-media a:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .content img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <img src="https://via.placeholder.com/400" alt="Deskripsi gambar">
+        <div class="content-description">
+            <h2>Judul Konten</h2>
+            <p>
+                Ini adalah deskripsi singkat dari konten pada halaman landing page. Anda dapat menjelaskan
+                fitur, manfaat, atau informasi lainnya yang relevan dengan gambar di samping.
+            </p>
+        </div>
+    </div>
+
+    <div class="running-text">
+        <span>Selamat datang di platform pembelajaran interaktif kami! Nikmati pengalaman belajar yang menyenangkan dan efektif. </span>
+        <span style="padding-left: 50px;">Fitur baru segera hadir! Tetap semangat belajar!</span>
+    </div>
+
+    <footer class="footer">
+        <p>Ikuti kami di media sosial:</p>
+        <div class="social-media">
+            <a href="#" title="Facebook">&#xf09a;</a> <!-- Facebook icon -->
+            <a href="#" title="Twitter">&#xf099;</a> <!-- Twitter icon -->
+            <a href="#" title="Instagram">&#xf16d;</a> <!-- Instagram icon -->
+            <a href="#" title="LinkedIn">&#xf08c;</a> <!-- LinkedIn icon -->
+        </div>
+    </footer>
+</body>
+</html>

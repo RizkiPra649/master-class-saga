@@ -438,47 +438,16 @@
 
 
   
-  .konten {
-    margin-top: 100px;
-    padding-top: 100px;
-    background-color: var(--bg2);
-  }
-  .konten .row {
-    display: flex;
-    padding: 1.4rem 8%;
-  background-color: none;
-  border-radius: 2%;
-  
-  }
-  
-  .kontent .row .about-img {
-    flex: 1 1 45rem;
-  }
-  
-  .konten .row .about-img img {
-    width: 100%;
-  }
-  
-  .konten .row .deskripsi {
-    flex: 1 1 35rem;
-    padding: 0 1rem;
-  }
-  
-  .konten .row .deskripsi p {
-    margin-bottom: 0.8rem;
-    font-size: 1.4rem;
-    font-weight: 200;
-    line-height: 1.6;
-    text-align: justify;
-  }
+ 
   /* Footer Styles ====================================================================================*/
   .footer {
-    background-color: #000000;
+    background-color: #040412;
     color: #ecf0f1;
     padding: 20px 0;
     font-family: Arial, sans-serif;
     margin-top: auto;
-    height: 500px;
+    height: auto;
+   
   }
   .footer .footer-bottom {
     margin-top: 20vh;
@@ -492,7 +461,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    max-width: 1200px;
+    width: auto;
     margin: 0 auto;
     padding: 0 20px;
     margin-top: 20vh;
