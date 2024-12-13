@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #212121;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .editor-container {
+            margin-top: 20px;
+        }
+        .editor {
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2c2c2c;
+            position: relative;
+            display: none;
+        }
+        .editor.active {
+            display: block;
+        }
+        .editor textarea {
+            width: 100%;
+            height: 300px;
+            background: #2c2c2c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            resize: none;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+        .editor .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #444;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        iframe {
+            border: 1px solid #444;
+            border-radius: 5px;
+            width: 100%;
+            height: 300px;
+            background: #fff;
+            margin-top: 20px;
+        }
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .tab-buttons button {
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .tab-buttons button.active {
+            background: #007bff;
+        }
+        .save-btn {
+            margin-top: 20px;
+            background: #28a745;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .resize-handle {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            cursor: ns-resize;
+            background: #555;
+        }
+        .mode-toggle {
+            background: #444;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-4">Code Editor</h1>
+
+        <div class="controls">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="livePreviewToggle">
+                <label class="form-check-label" for="livePreviewToggle">Live Preview</label>
+            </div>
+            <button id="runCode" class="btn btn-primary">Run</button>
+            <button class="mode-toggle" id="modeToggle">Toggle Dark/Light</button>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-editor="htmlEditor">HTML</button>
+            <button class="tab-btn" data-editor="cssEditor">CSS</button>
+            <button class="tab-btn" data-editor="jsEditor">JavaScript</button>
+        </div>
+
+        <div class="editor-container">
+            <div class="editor active" id="htmlEditor">
+                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+                <div class="resize-handle" onmousedown="startResizing(event, 'htmlCode')"></div>
+                <button class="copy-btn" onclick="copyCode('htmlCode')">Copy</button>
+            </div>
+            <div class="editor" id="cssEditor">
+                <textarea id="cssCode" placeholder="Write CSS here..."></textarea>
+                <div class="resize-handle" onmousedown="startResizing(event, 'cssCode')"></div>
+                <button class="copy-btn" onclick="copyCode('cssCode')">Copy</button>
+            </div>
+            <div class="editor" id="jsEditor">
+                <textarea id="jsCode" placeholder="Write JavaScript here..."></textarea>
+                <div class="resize-handle" onmousedown="startResizing(event, 'jsCode')"></div>
+                <button class="copy-btn" onclick="copyCode('jsCode')">Copy</button>
+            </div>
+        </div>
+
+        <iframe id="preview" sandbox="allow-scripts allow-same-origin"></iframe>
+
+        <button class="save-btn" onclick="saveCode()">Save</button>
+    </div>
+
+    <script>
+        const htmlCode = document.getElementById('htmlCode');
+        const cssCode = document.getElementById('cssCode');
+        const jsCode = document.getElementById('jsCode');
+        const preview = document.getElementById('preview');
+        const livePreviewToggle = document.getElementById('livePreviewToggle');
+        const runCode = document.getElementById('runCode');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const editors = document.querySelectorAll('.editor');
+        const modeToggle = document.getElementById('modeToggle');
+
+        function updatePreview() {
+            const html = htmlCode.value;
+            const css = `<style>${cssCode.value}</style>`;
+            const js = `<script>${jsCode.value}<\/script>`;
+            const content = `${html}${css}${js}`;
+            preview.srcdoc = content;
+        }
+
+        function copyCode(id) {
+            const textArea = document.getElementById(id);
+            navigator.clipboard.writeText(textArea.value)
+                .then(() => alert('Code copied to clipboard!'))
+                .catch(err => alert('Failed to copy code: ' + err));
+        }
+
+        function saveCode() {
+            const html = htmlCode.value;
+            const css = cssCode.value;
+            const js = jsCode.value;
+            const blob = new Blob([`<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'code.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        runCode.addEventListener('click', updatePreview);
+
+        [htmlCode, cssCode, jsCode].forEach(editor => {
+            editor.addEventListener('input', () => {
+                if (livePreviewToggle.checked) {
+                    updatePreview();
+                }
+                localStorage.setItem(editor.id, editor.value);
+            });
+        });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const targetEditor = button.getAttribute('data-editor');
+                editors.forEach(editor => {
+                    editor.classList.remove('active');
+                    if (editor.id === targetEditor) {
+                        editor.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        function startResizing(event, editorId) {
+            const editor = document.getElementById(editorId);
+            const startY = event.clientY;
+            const startHeight = editor.offsetHeight;
+
+            function resize(e) {
+                const newHeight = startHeight + (e.clientY - startY);
+                editor.style.height = newHeight + 'px';
+            }
+
+            function stopResizing() {
+                document.removeEventListener('mousemove', resize);
+                document.removeEventListener('mouseup', stopResizing);
+            }
+
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResizing);
+        }
+
+        modeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.body.style.backgroundColor = isLight ? '#f5f5f5' : '#212121';
+            document.body.style.color = isLight ? '#000' : '#fff';
+        });
+
+        // Load saved data from localStorage
+        [htmlCode, cssCode, jsCode].forEach(editor => {
+            const savedData = localStorage.getItem(editor.id);
+            if (savedData) {
+                editor.value = savedData;
+            }
+        });
+    </script>
+</body>
+</html>

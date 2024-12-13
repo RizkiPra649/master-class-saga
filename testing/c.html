@@ -6,12 +6,22 @@
     <title>Code Editor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-darker.min.css">
     <style>
         body {
             background-color: #212121;
             color: #fff;
             font-family: Arial, sans-serif;
             transition: background-color 0.3s, color 0.3s;
+            min-height: 1420px;
+            line-height: 1.6;
+    display: flex;
+    
+    flex-direction: column;
+        }
+        body.light-mode {
+            background-color: #f8f9fa;
+            color: #212529;
         }
         .editor-container {
             margin-top: 20px;
@@ -33,8 +43,12 @@
             margin-top: 20px;
             resize: both;
             overflow: auto;
+            width: 100%;
+            height: 300px;
         }
+        
         .controls {
+            margin-top: 20px;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
@@ -55,54 +69,180 @@
         .tab-buttons button.active {
             background: #007bff;
         }
-        .save-btn {
-            margin-top: 20px;
+        .controls .save-btn {
+            
             background: #28a745;
             border: none;
             color: #fff;
-            padding: 10px 20px;
+            padding: 5px 20px;
             cursor: pointer;
             border-radius: 3px;
+            
         }
         .mode-toggle {
-            background: #444;
-            border: none;
-            color: #fff;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s;
+}
+
+.mode-toggle::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    transform: translateX(0);
+    transition: transform 0.4s;
+}
+
+.mode-toggle.dark {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+.mode-toggle.dark::after {
+    transform: translateX(30px);
+}
+
+.content {
+    flex: 1; /* Mengisi sisa space di konten */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 2rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: #00bcd4;
+}
+
+.footer-social a {
+    color: white;
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-social a:hover {
+    color: #00bcd4;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.container h1 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+@media (max-width : 550px){
+
+.controls {
+    font-size: 12px;
+    
+    
+
+}
+.controls .save-btn{
+padding: none;
+
+}
+}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mt-4">Code Editor</h1>
+        <h1 class="text-center mt-4"> Master  <span style="color: orange; font-weight: bold;">Class</span> Code Editor</h1>
 
-        <div class="controls">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="livePreviewToggle">
-                <label class="form-check-label" for="livePreviewToggle">Live Preview</label>
-            </div>
-            <button id="runCode" class="btn btn-primary">Run</button>
-            <button class="mode-toggle" id="modeToggle">Toggle Dark/Light</button>
-        </div>
+       
 
         <div class="tab-buttons">
             <button class="tab-btn active" data-editor="htmlEditor">HTML</button>
             <button class="tab-btn" data-editor="cssEditor">CSS</button>
             <button class="tab-btn" data-editor="jsEditor">JavaScript</button>
         </div>
-
+        
         <div class="editor-container">
             <div class="editor active" id="htmlEditor"></div>
             <div class="editor" id="cssEditor"></div>
             <div class="editor" id="jsEditor"></div>
         </div>
+        
+        <div class="controls">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="livePreviewToggle">
+                <label class="form-check-label" for="livePreviewToggle">Live Preview</label>
+            </div>
+            <button id="runCode" class="btn btn-primary">Run</button>
+            <button class="save-btn" onclick="saveCode()">Save</button>
+            <button class="mode-toggle" id="modeToggle">Toggle Dark/Light</button>
+
+        </div>
 
         <iframe id="preview" sandbox="allow-scripts allow-same-origin"></iframe>
 
-        <button class="save-btn" onclick="saveCode()">Save</button>
+        
     </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Master class Saga</div>
+            <ul class="footer-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="https://rizkipra649.github.io/master-class-saga/testing/akunsiswa.html">Student</a></li>
+                <li><a href="https://5500-idx-game1-1732416911382.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev/index.html#block">Course</a></li>
+                <li><a href="#contact">Tips</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 MPI Project. All rights reserved.
+        </div>
+    </footer>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
@@ -113,17 +253,17 @@
         const editors = {
             html: CodeMirror(document.getElementById('htmlEditor'), {
                 mode: 'xml',
-                theme: 'default',
+                theme: 'material-darker',
                 lineNumbers: true
             }),
             css: CodeMirror(document.getElementById('cssEditor'), {
                 mode: 'css',
-                theme: 'default',
+                theme: 'material-darker',
                 lineNumbers: true
             }),
             js: CodeMirror(document.getElementById('jsEditor'), {
                 mode: 'javascript',
-                theme: 'default',
+                theme: 'material-darker',
                 lineNumbers: true
             })
         };
@@ -132,6 +272,16 @@
         const livePreviewToggle = document.getElementById('livePreviewToggle');
         const runCode = document.getElementById('runCode');
         const tabButtons = document.querySelectorAll('.tab-btn');
+        const modeToggle = document.getElementById('modeToggle');
+        
+
+        let isDarkMode = true;
+
+
+
+       
+
+
 
         function updatePreview() {
             const html = editors.html.getValue();
@@ -169,6 +319,16 @@
             });
         });
 
+        modeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('light-mode', !isDarkMode);
+
+            const theme = isDarkMode ? 'material-darker' : 'default';
+            Object.values(editors).forEach(editor => editor.setOption('theme', theme));
+
+            localStorage.setItem('isDarkMode', isDarkMode);
+        });
+
         function saveCode() {
             const html = editors.html.getValue();
             const css = editors.css.getValue();
@@ -189,6 +349,12 @@
                 editor.setValue(savedData);
             }
         });
+
+        // Load saved mode preference
+        isDarkMode = JSON.parse(localStorage.getItem('isDarkMode') || 'true');
+        document.body.classList.toggle('light-mode', !isDarkMode);
+        const theme = isDarkMode ? 'material-darker' : 'default';
+        Object.values(editors).forEach(editor => editor.setOption('theme', theme));
     </script>
 </body>
 </html>

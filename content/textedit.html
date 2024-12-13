@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Fonts-->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -20,9 +20,8 @@
       referrerpolicy="no-referrer"
     />
 
-    <!-- Feather Icons-->
+    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
     <!-- CodeMirror -->
     <link
@@ -37,11 +36,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-  
+
     <title>Code Typer</title>
     <link rel="stylesheet" href="/content/textedit.css" />
     <link rel="stylesheet" href="/content/textresponsive.css" />
-
   </head>
 
   <body>
@@ -52,21 +50,22 @@
 
       <div class="navbar-nav">
         <a href="../../index.html">Beranda</a>
-        <a href="#html-fix">Html</a>
-        <a href="#css-fix">Css</a>
-        <a href="#js-fix">JavaScript</a>
-        <a href="#buttons">Save</a>
-        
+        <a href="#html-editor">HTML</a>
+        <a href="#css-editor">CSS</a>
+        <a href="#js-editor">JavaScript</a>
+        <a href="#save">Save</a>
       </div>
 
       <div class="navbar-extra">
-        <div class="search-container " id="search-container">
+        <div class="search-container hidden" id="search-container">
           <input type="text" class="search-input" placeholder="Cari sesuatu..." />
         </div>
         <button class="search-icon" onclick="toggleSearch()">
-          <a id="#"><i data-feather="search"></i></a>
+          <i data-feather="search"></i>
         </button>
-        <a id="humberger-menu"><i data-feather="menu"></i></a>
+        <button id="hamburger-menu">
+          <i data-feather="menu"></i>
+        </button>
       </div>
     </nav>
 
@@ -78,27 +77,28 @@
           <iframe id="output"></iframe>
         </div>
       </div>
+
       <div class="container">
         <!-- HTML Editor -->
         <div class="editor-section">
-          <h3 id="html-fix">HTML</h3>
+          <h3 id="html-editor">HTML</h3>
           <textarea id="html-code"></textarea>
         </div>
 
         <!-- CSS Editor -->
         <div class="editor-section">
-          <h3 id="css-fix">CSS</h3>
+          <h3 id="css-editor">CSS</h3>
           <textarea id="css-code"></textarea>
         </div>
 
         <!-- JavaScript Editor -->
         <div class="editor-section">
-          <h3 id="js-fix">JavaScript</h3>
+          <h3 id="js-editor">JavaScript</h3>
           <textarea id="js-code"></textarea>
         </div>
       </div>
 
-      <div class="buttons" id="buttons">
+      <div class="buttons" id="save">
         <label for="fileType">Choose file type:</label>
         <select id="fileType">
           <option value="html">HTML</option>
@@ -106,21 +106,107 @@
           <option value="js">JavaScript</option>
         </select>
         <button id="save-code">Save</button>
-        <button id="toggleBtn">Switch</button>
         <button id="clear">Clear Editors</button>
       </div>
     </div>
 
-    <div class="garis"></div>
+    <script>
+      // Toggle class active for hamburger menu
+      const navbarNav = document.querySelector(".navbar-nav");
+      document.querySelector("#hamburger-menu").onclick = () => {
+        navbarNav.classList.toggle("active");
+      };
 
-    <div class="wrap">
+      // Toggle search bar
+      function toggleSearch() {
+        const searchContainer = document.getElementById("search-container");
+        searchContainer.classList.toggle("hidden");
+      }
 
+      // Initialize CodeMirror editors
+      const htmlEditor = CodeMirror.fromTextArea(
+        document.getElementById("html-code"),
+        {
+          mode: "htmlmixed",
+          theme: "dracula",
+          viewportMargin: Infinity,
+          lineNumbers: true,
+        }
+      );
 
-    </div>
-   
+      const cssEditor = CodeMirror.fromTextArea(
+        document.getElementById("css-code"),
+        {
+          mode: "css",
+          theme: "dracula",
+          lineNumbers: true,
+        }
+      );
+
+      const jsEditor = CodeMirror.fromTextArea(
+        document.getElementById("js-code"),
+        {
+          mode: "javascript",
+          theme: "dracula",
+          lineNumbers: true,
+        }
+      );
+
+      const output = document.getElementById("output");
+
+      // Update output iframe
+      function updateOutput() {
+        const html = htmlEditor.getValue();
+        const css = `<style>${cssEditor.getValue()}</style>`;
+        const js = `<script>${jsEditor.getValue()}<\/script>`;
+
+        output.contentDocument.open();
+        output.contentDocument.write(`${html}${css}${js}`);
+        output.contentDocument.close();
+      }
+
+      [htmlEditor, cssEditor, jsEditor].forEach((editor) => {
+        editor.on("change", updateOutput);
+      });
+
+      // Clear editors
+      document.getElementById("clear").addEventListener("click", () => {
+        htmlEditor.setValue("");
+        cssEditor.setValue("");
+        jsEditor.setValue("");
+        updateOutput();
+      });
+
+      // Save code
+      document.getElementById("save-code").addEventListener("click", () => {
+        const fileType = document.getElementById("fileType").value;
+        let content = "";
+        let fileName = "";
+
+        if (fileType === "html") {
+          content = htmlEditor.getValue();
+          fileName = "index.html";
+        } else if (fileType === "css") {
+          content = cssEditor.getValue();
+          fileName = "style.css";
+        } else if (fileType === "js") {
+          content = jsEditor.getValue();
+          fileName = "script.js";
+        }
+
+        const blob = new Blob([content], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+      });
+
+      // Initial output update
+      updateOutput();
+    </script>
+
     <script>
       feather.replace();
     </script>
-    <script src="/content/code.js"></script>
   </body>
 </html>
