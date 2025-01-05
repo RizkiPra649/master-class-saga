@@ -146,6 +146,7 @@ footer {
     text-decoration: none;
     color: white;
     transition: color 0.3s ease-in-out;
+    padding-left: 20px;
 }
 
 .footer-links a:hover {
@@ -154,7 +155,7 @@ footer {
 
 .footer-social a {
     color: white;
-    margin: 0 0.5rem;
+    margin: auto;
     font-size: 1.5rem;
     transition: color 0.3s ease-in-out;
 }
@@ -179,12 +180,25 @@ footer {
 .controls {
     font-size: 12px;
     
-    
+}
+.mode-toggle {
+    display: none;
 
+}
+.footer-content {
+    flex-direction: row;
+}
+.footer-links {
+    flex-direction: column;
+   
 }
 .controls .save-btn{
 padding: none;
 
+}
+.footer-bottom {
+    font-size: 8px;
+    margin-bottom: 1px;
 }
 }
     </style>
@@ -214,7 +228,7 @@ padding: none;
             </div>
             <button id="runCode" class="btn btn-primary">Run</button>
             <button class="save-btn" onclick="saveCode()">Save</button>
-            <button class="mode-toggle" id="modeToggle">Toggle Dark/Light</button>
+            <button class="mode-toggle" id="modeToggle">Theme</button>
 
         </div>
 
@@ -227,7 +241,7 @@ padding: none;
             <div class="footer-logo">Master class Saga</div>
             <ul class="footer-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="https://rizkipra649.github.io/master-class-saga/testing/akunsiswa.html">Student</a></li>
+                
                 <li><a href="https://5500-idx-game1-1732416911382.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev/index.html#block">Course</a></li>
                 <li><a href="#contact">Tips</a></li>
             </ul>
