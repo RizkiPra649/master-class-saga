@@ -872,7 +872,9 @@
       text-align: center;
       
     }
-
+    .hero .content {
+      position :relative;
+    }
     .mapel {
       
       height : auto;
