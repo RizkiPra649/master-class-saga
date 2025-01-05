@@ -45,7 +45,7 @@ function moveCarousel(direction) {
 // tombol mulai belajar
 const button = document.getElementById("halaman-login");
 button.addEventListener("click", () => {
-  window.location.href = "../login/login.html";
+  window.location.href = "https://rizkipra649.github.io/master-class-saga/login/login.html";
 });
 
 //Backend tombol mulai belajar
